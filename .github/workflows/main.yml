@@ -38,6 +38,10 @@ jobs:
           fi
           echo "dir=$(dirname "$F")" >> "$GITHUB_OUTPUT"
 
+      - name: 허브 게임 파일 조립 (hub/build.py)
+        working-directory: ${{ steps.proj.outputs.dir }}
+        run: python3 hub/build.py
+
       - name: Build APK
         working-directory: ${{ steps.proj.outputs.dir }}
         run: gradle --no-daemon assembleDebug

@@ -1,0 +1,5 @@
+<resources>
+    <!-- 허브 앱: 주문 화면 오른쪽 위에 작은 Game 아이콘 -->
+    <integer name="bubble_dp">52</integer>
+    <bool name="bubble_top_right">true</bool>
+</resources>

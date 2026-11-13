@@ -1,0 +1,4 @@
+<resources>
+    <integer name="bubble_dp">64</integer>
+    <bool name="bubble_top_right">false</bool>
+</resources>

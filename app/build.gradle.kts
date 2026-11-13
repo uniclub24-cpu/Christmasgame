@@ -15,9 +15,10 @@ android {
         versionName = "1.0.0"
     }
 
-    // 같은 소스로 앱 2개: 페리 크리스마스(com.peli.tree) · 떨어지는 선물 받기(com.peli.catch) — 태블릿에 따로 설치·플로팅
+    // hub = 4개 게임 묶음 앱(com.peli.hub · 랜딩에서 게임 고르기) / tree · catch = 게임 하나짜리 앱
     flavorDimensions += "game"
     productFlavors {
+        create("hub") { dimension = "game"; applicationId = "com.peli.hub" }
         create("tree") { dimension = "game"; applicationId = "com.peli.tree" }
         create("catch") { dimension = "game"; applicationId = "com.peli.catch" }
     }

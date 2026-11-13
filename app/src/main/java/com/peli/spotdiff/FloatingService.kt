@@ -82,7 +82,7 @@ class FloatingService : Service() {
     @SuppressLint("ClickableViewAccessibility")
     private fun addBubble() {
         if (bubble != null) return
-        val size = (64 * resources.displayMetrics.density).toInt()
+        val size = (resources.getInteger(R.integer.bubble_dp) * resources.displayMetrics.density).toInt()
         val type = if (Build.VERSION.SDK_INT >= 26) WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
         else WindowManager.LayoutParams.TYPE_PHONE
         val lp = WindowManager.LayoutParams(
@@ -92,7 +92,13 @@ class FloatingService : Service() {
         ).apply {
             gravity = Gravity.TOP or Gravity.START
             val sp = Prefs.sp(this@FloatingService)
-            x = sp.getInt("bubbleX", 24); y = sp.getInt("bubbleY", 200)
+            if (resources.getBoolean(R.bool.bubble_top_right)) {
+                // 기본 위치: 화면 오른쪽 위 (끌어서 옮기면 그 자리를 기억)
+                val m = (14 * resources.displayMetrics.density).toInt()
+                x = sp.getInt("bubbleX", resources.displayMetrics.widthPixels - size - m); y = sp.getInt("bubbleY", m)
+            } else {
+                x = sp.getInt("bubbleX", 24); y = sp.getInt("bubbleY", 200)
+            }
         }
         val v = ImageView(this).apply {
             setImageResource(R.drawable.peli_float)
@@ -134,7 +140,7 @@ class FloatingService : Service() {
         val b = bubble ?: return
         val lp = bubbleLp ?: return
         val real = wantVisible && Prefs.floating(this) && !MainActivity.iconSuppressed
-        val size = (64 * resources.displayMetrics.density).toInt()
+        val size = (resources.getInteger(R.integer.bubble_dp) * resources.displayMetrics.density).toInt()
         lp.width = if (real) size else 1
         lp.height = if (real) size else 1
         lp.flags = if (real) {
